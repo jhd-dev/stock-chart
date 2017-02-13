@@ -1,0 +1,26 @@
+{
+  "name": "stock-chart",
+  "version": "1.0.0",
+  "description": "A stock market viewer that is synced across clients.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/porygonj/stock-chart.git"
+  },
+  "author": "Jonathan Doliver <porygonj@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/porygonj/stock-chart/issues"
+  },
+  "homepage": "https://github.com/porygonj/stock-chart#readme",
+  "dependencies": {
+    "express": "^4.14.1",
+    "http": "0.0.0",
+    "mongoose": "^4.8.2",
+    "ws": "^2.0.3"
+  }
+}
