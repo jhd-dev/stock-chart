@@ -1,32 +1,28 @@
+'use strict';
+
 var express = require('express');
+var mongoose = require('mongoose');
 var http = require('http');
 var WebSocket = require('ws');
-var MongoClient = require('mongodb').MongoClient;
+var routes = require('./server/routes/router');
+var socketEvents = require('./server/routes/socket');
+require('dotenv').config();
+
 var path = process.cwd();
 var port = process.env.PORT || 8080;
 
-var app = express();
+mongoose.connect(process.env.MONGO_URI);
+mongoose.Promise = global.Promise;
 
+var app = express();
 app.use('/', express.static(path + '/client'));
+routes(app);
 
 var server = http.createServer(app);
 var wss = new WebSocket.Server({
     server: server
 });
-
-wss.on('connection', function(ws){
-    var id = setInterval(function(){
-        ws.send(JSON.stringify(new Date()), function(){});
-    }, 1000);
-    
-    console.log('websocket connection open');
-    
-    ws.on('close', function(){
-        console.log("websocket connection close");
-        clearInterval(id);
-    });
-});
-
+socketEvents(wss);
 
 server.listen(port, function(){
     console.log('Listening on port ' + port);
