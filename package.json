@@ -18,11 +18,15 @@
   },
   "homepage": "https://github.com/porygonj/stock-chart#readme",
   "dependencies": {
+    "check-ticker-symbol": "^1.0.0",
+    "dateformat": "^2.0.0",
     "dotenv": "^4.0.0",
     "express": "^4.14.1",
+    "google-finance": "^0.1.9",
     "http": "0.0.0",
     "mongoose": "^4.8.2",
     "mongoose-findorcreate": "^1.0.0",
-    "ws": "^2.0.3"
+    "ws": "^2.0.3",
+    "yahoo-finance": "^0.2.16"
   }
 }

@@ -6,8 +6,19 @@
     </head>
     <body>
         <h1>Stock Market Chart</h1>
+        <p id="data"></p>
+        <div id="stock-tiles">
+            <div id="new-stock" class="stock-tile">
+                <input type="text" id="new-stock-text" class="uppercase" />
+            </div>
+            <div v-for="symbol in symbols">{{symbol}}</div>
+        </div>
+        <div id="graph"></div>
         
+        <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
         <script type="text/javascript" src="./js/jquery.min.js"></script>
+        <script type="text/javascript" src="https://code.highcharts.com/stock/highstock.js"></script>
+        <script type="text/javascript" src="https://code.highcharts.com/stock/modules/exporting.js"></script>
         <script type="text/javascript" src="./js/index.js"></script>
     </body>
 </html>
