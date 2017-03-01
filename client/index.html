@@ -2,18 +2,23 @@
 <html>
     <head>
         <title>Stock Market Chart</title>
-        <link rel="stylesheet" href="./css/main.css" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Amiko:400,700" rel="stylesheet">
+        <link rel="stylesheet" href="./css/main.css" type="text/css">
     </head>
     <body>
-        <h1>Stock Market Chart</h1>
-        <p id="data"></p>
+        <header>
+            <h1>Stock Market Chart</h1>
+        </header>
+        <div id="graph"></div>
         <div id="stock-tiles">
             <div id="new-stock" class="stock-tile">
+                <h3 class="stock-card-title">Add a stock:</h3>
                 <input type="text" id="new-stock-text" class="uppercase" />
+            </div><!-- avoiding extra space character
+            --><div v-for="symbol in symbols" class="stock-tile">
+                <h3 class="stock-card-title">{{symbol}} <span v-on:click="removeStock(symbol)" class="remove-stock-btn">&#10006;</span></h3>
             </div>
-            <div v-for="symbol in symbols">{{symbol}}</div>
         </div>
-        <div id="graph"></div>
         
         <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

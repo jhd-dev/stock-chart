@@ -20,7 +20,6 @@ module.exports = function(wss){
                     stockManager.getStockData(stocks.symbols, function(data){
                         var formatted = stockManager.formatStockData(data);
                         console.log(JSON.stringify(formatted).substr(0, 100));
-                        //console.log(JSON.stringify(formatted));
                         sendJSON(ws, formatted);
                     });
                 }
@@ -33,8 +32,13 @@ module.exports = function(wss){
         var update = setInterval(updateClient, 3000);
         
         ws.on('message', function(message){
-            stockManager.addStock(message);
-            updateClient();
+            var data = JSON.parse(message);
+            if (data.add){
+                stockManager.addStock(data.add, updateClient);
+            }
+            if (data.remove){
+                stockManager.removeStock(data.remove, updateClient);
+            }
         });
         
         ws.on('close', function(){

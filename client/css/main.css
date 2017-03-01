@@ -1,3 +1,45 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Amiko', sans-serif;
+}
+
+header {
+    margin-left: 16px;
+    text-align: center;
+}
+
+#stock-tiles {
+    text-align: center;
+}
+
+.stock-tile {
+    display: inline-block;
+    margin: 0 12px;
+    padding: 6px;
+    border: 1px solid gray;
+    min-width: 100px;
+    vertical-align: top;
+}
+
+.remove-stock-btn {
+    opacity: 0;
+    color: #a22;
+    cursor: pointer;
+}
+
+.stock-tile:hover .remove-stock-btn {
+    opacity: 0.6;
+}
+
+.remove-stock-btn:hover {
+    opacity: 1 !important;
+}
+
 .uppercase {
     text-transform: uppercase;
 }

@@ -1,17 +1,24 @@
-(function($, Highcharts){
-    
-    var stockVue = new Vue({
-        el: '#stock-tiles',
-        data: {
-            symbols: []
-        }
-    });
+(function($, Vue, Highcharts){
     
     var seriesOptions = [];
     var updateCount = 0;
     
     var host = window.location.origin.replace(/^http/, 'ws');
     var ws = new WebSocket(host);
+    
+    var stockVue = new Vue({
+        el: '#stock-tiles',
+        data: {
+            symbols: []
+        },
+        methods: {
+            removeStock: function(symbol){console.log(symbol);
+                ws.send(JSON.stringify({
+                    remove: symbol
+                }));
+            }
+        }
+    });
     
     function createChart() {
         Highcharts.stockChart('graph', {
@@ -55,15 +62,19 @@
                 seriesOptions.push(stock);
             });
             createChart();
-            stockVue.$set('symbols', Object.keys(data));
+            stockVue.symbols = data.map(function(stock){
+                return stock.name;
+            });
         };
         
         $('#new-stock-text').on('keypress', function(e){
             if (e.keyCode === 13){
-                ws.send($(this).val());
+                ws.send(JSON.stringify({
+                    add: $(this).val()
+                }));
             }
         });
         
     });
     
-})($, Highcharts);
+})($, Vue, Highcharts);
