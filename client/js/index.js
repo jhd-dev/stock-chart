@@ -1,4 +1,4 @@
-$(document).ready(function(){
+(function($, Highcharts){
     
     var stockVue = new Vue({
         el: '#stock-tiles',
@@ -12,24 +12,7 @@ $(document).ready(function(){
     
     var host = window.location.origin.replace(/^http/, 'ws');
     var ws = new WebSocket(host);
-    ws.onmessage = function(e){
-        var data = JSON.parse(e.data);
-        updateCount ++;
-        //$('#data').html(e.data + '<br />' + 'Updated ' + updateCount + ' times');
-        seriesOptions = [];
-        $.each(data, function(symbol, stock){
-            seriesOptions.push(stock);
-        });
-        createChart();
-        stockVue.$set('symbols', Object.keys(data));
-    };
     
-    $('#new-stock-text').on('keypress', function(e){
-        if (e.keyCode === 13){
-            ws.send($(this).val());
-        }
-    });
-
     function createChart() {
         Highcharts.stockChart('graph', {
             rangeSelector: {
@@ -37,7 +20,7 @@ $(document).ready(function(){
             },
             yAxis: {
                 labels: {
-                    formatter: function () {
+                    formatter: function(){
                         return (this.value > 0 ? ' + ' : '') + this.value + '%';
                     }
                 },
@@ -62,4 +45,25 @@ $(document).ready(function(){
         });
     }
     
-});
+    $(document).ready(function(){
+        
+        ws.onmessage = function(e){
+            var data = JSON.parse(e.data);
+            updateCount ++;
+            seriesOptions = [];
+            $.each(data, function(symbol, stock){
+                seriesOptions.push(stock);
+            });
+            createChart();
+            stockVue.$set('symbols', Object.keys(data));
+        };
+        
+        $('#new-stock-text').on('keypress', function(e){
+            if (e.keyCode === 13){
+                ws.send($(this).val());
+            }
+        });
+        
+    });
+    
+})($, Highcharts);
