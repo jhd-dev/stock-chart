@@ -9,11 +9,12 @@ body {
 }
 
 header {
-    margin-left: 16px;
+    margin: 24px 0 0 12px;
     text-align: center;
 }
 
 #stock-tiles {
+    margin: 24px;
     text-align: center;
 }
 
@@ -21,9 +22,23 @@ header {
     display: inline-block;
     margin: 0 12px;
     padding: 6px;
-    border: 1px solid gray;
+    border: 1px solid #ddd;
     min-width: 100px;
     vertical-align: top;
+}
+
+.stock-tile:hover {
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+#new-stock-btn {
+    display: inline-block;
+    min-width: 1em;
+    height: calc(1em + 1px);
+    vertical-align: middle;
+    text-align: center;
+    background-color: #bbb;
+    cursor: pointer;
 }
 
 .remove-stock-btn {
@@ -42,4 +57,10 @@ header {
 
 .uppercase {
     text-transform: uppercase;
+}
+
+.page-info {
+    font-size: 14px;
+    text-align: center;
+    color: #aaa;
 }

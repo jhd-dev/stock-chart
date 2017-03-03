@@ -9,11 +9,7 @@
             symbols: []
         },
         methods: {
-            removeStock: function(symbol){
-                ws.send(JSON.stringify({
-                    remove: symbol
-                }));
-            }
+            removeStock: removeStock
         }
     });
     
@@ -68,15 +64,28 @@
         });
     }
     
+    function addStock(symbol){
+        ws.send(JSON.stringify({
+            add: symbol
+        }));
+    }
+    
+    function removeStock(symbol){
+        ws.send(JSON.stringify({
+            remove: symbol
+        }));
+    }
+    
     $(document).ready(function(){
-        ready = true;
         
         $('#new-stock-text').on('keypress', function(e){
             if (e.keyCode === 13){
-                ws.send(JSON.stringify({
-                    add: $(this).val()
-                }));
+                addStock($(this).val());
             }
+        });
+        
+        $('#new-stock-btn').on('click', function(){
+            addStock($('#new-stock-text').val());
         });
         
     });

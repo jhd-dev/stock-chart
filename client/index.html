@@ -7,18 +7,22 @@
     </head>
     <body>
         <header>
-            <h1>Stock Market Chart</h1>
+            <h1 id="head-main">Stock Market Chart</h1>
         </header>
         <div id="graph"></div>
         <div id="stock-tiles">
             <div id="new-stock" class="stock-tile">
                 <h3 class="stock-card-title">Add a stock:</h3>
-                <input type="text" id="new-stock-text" class="uppercase" />
+                <div id="new-stock-bar">
+                    <input type="text" id="new-stock-text" class="uppercase" /><!--
+                    --><div id="new-stock-btn">+</div>
+                </div>
             </div><!-- avoiding extra space character
             --><div v-for="symbol in symbols" class="stock-tile">
                 <h3 class="stock-card-title">{{symbol}} <span v-on:click="removeStock(symbol)" class="remove-stock-btn">&#10006;</span></h3>
             </div>
         </div>
+        <p class="page-info">- Data synced across clients -</p>
         
         <script type="text/javascript" src="https://unpkg.com/vue/dist/vue.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
