@@ -1,10 +1,7 @@
 (function($, Vue, Highcharts){
     
-    var seriesOptions = [];
-    var updateCount = 0;
-    
-    var host = window.location.origin.replace(/^http/, 'ws');
-    var ws = new WebSocket(host);
+    var chartSeries = [];
+    var ws = connectToServer();
     
     var stockVue = new Vue({
         el: '#stock-tiles',
@@ -12,7 +9,7 @@
             symbols: []
         },
         methods: {
-            removeStock: function(symbol){console.log(symbol);
+            removeStock: function(symbol){
                 ws.send(JSON.stringify({
                     remove: symbol
                 }));
@@ -20,7 +17,26 @@
         }
     });
     
-    function createChart() {
+    function connectToServer(){
+        var host = window.location.origin.replace(/^http/, 'ws');
+        var ws = new WebSocket(host);
+        ws.onmessage = recieveUpdate;
+        return ws;
+    }
+    
+    function recieveUpdate(e){
+        var data = JSON.parse(e.data);
+        chartSeries = [];
+        $.each(data, function(symbol, stock){
+            chartSeries.push(stock);
+        });
+        createChart();
+        stockVue.symbols = data.map(function(stock){
+            return stock.name;
+        });
+    }
+    
+    function createChart(){
         Highcharts.stockChart('graph', {
             rangeSelector: {
                 selected: 4
@@ -48,24 +64,12 @@
                 valueDecimals: 2,
                 split: true
             },
-            series: seriesOptions
+            series: chartSeries
         });
     }
     
     $(document).ready(function(){
-        
-        ws.onmessage = function(e){
-            var data = JSON.parse(e.data);
-            updateCount ++;
-            seriesOptions = [];
-            $.each(data, function(symbol, stock){
-                seriesOptions.push(stock);
-            });
-            createChart();
-            stockVue.symbols = data.map(function(stock){
-                return stock.name;
-            });
-        };
+        ready = true;
         
         $('#new-stock-text').on('keypress', function(e){
             if (e.keyCode === 13){
